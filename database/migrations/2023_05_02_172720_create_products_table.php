@@ -20,8 +20,8 @@ class CreateProductsTable extends Migration
             // relacion with categories
             $table->unsignedBigInteger('category_id');
             // array of barcode
-            $table->text('barcode')->nullable();
-            $table->text('precios')->nullable();
+            $table->json('barcode')->nullable();
+            $table->json('precios')->nullable();
             $table->boolean('estado')->default(true);
             $table->foreign('category_id')->references('id')->on('categories');
 

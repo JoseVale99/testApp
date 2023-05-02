@@ -3,6 +3,7 @@
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\PriceController;
+use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,3 +51,14 @@ Route::get('/prices/{price}/edit', [PriceController::class, 'edit'])->name('pric
 Route::put('/prices/{price}', [PriceController::class, 'update'])->name('prices.update');
 Route::delete('/prices/{price}', [PriceController::class, 'destroy'])->name('prices.destroy');
 Route::get('/prices/{price}', [PriceController::class, 'show'])->name('prices.show');
+
+
+// crud de products
+
+Route::get('/products', [ProductController::class, 'index'])->name('products.index');
+Route::get('/products/create', [ProductController::class, 'create'])->name('products.create');
+Route::post('/products', [ProductController::class, 'store'])->name('products.store');
+Route::get('/products/{product}/edit', [ProductController::class, 'edit'])->name('products.edit');
+Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
+Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');

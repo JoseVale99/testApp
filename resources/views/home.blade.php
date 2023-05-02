@@ -26,6 +26,9 @@
                             <div class="p-2"><a href="{{ route('prices.index') }}" class="btn btn-success">Crud de
                                     precios</a></div>
 
+                            <div class="p-2"><a href="{{ route('products.index') }}" class="btn btn-warning">Crud de
+                                    productos</a></div>
+
                         </div>
                     </div>
                 </div>

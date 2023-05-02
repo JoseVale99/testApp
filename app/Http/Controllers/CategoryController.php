@@ -26,7 +26,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'codigo' => 'required|unique:categories|max:20|regex:/^[0-9]+$/',
+            'codigo' => 'required|unique:categories|max:10|regex:/^[0-9]+$/',
             'descripcion' => 'required|max:60|regex:/^[a-zA-Z0-9]+$/',
             'estado' => 'required',
         ]);
@@ -54,7 +54,7 @@ class CategoryController extends Controller
     {
 
         $request->validate([
-            'codigo' => 'required|max:20|regex:/^[0-9]+$/',
+            'codigo' => 'required|max:10|regex:/^[0-9]+$/',
             'descripcion' => 'required|max:60|regex:/^[a-zA-Z0-9]+$/',
             'estado' => 'required',
         ]);

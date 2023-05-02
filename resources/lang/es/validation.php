@@ -149,6 +149,8 @@ return [
     'attributes' => [
         'descripcion' => 'descripción',
         'codigo' => 'código',
+        'category_id' => 'categoría',
+        'barcode' => 'Código de barra',
 
     ],
 
