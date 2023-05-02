@@ -2,15 +2,15 @@
 
 @section('content')
     <div class="container">
-        {{-- table of barcodes --}}
+        {{-- table of prices --}}
         <div class="row">
             <div class="col-md-12">
-                <h1>Lista de codigos de barras</h1>
+                <h1>Lista de precios</h1>
             </div>
 
             {{-- boton agregar --}}
             <div class="col-md-4 mt-3">
-                <a href="{{ route('barcodes.create') }}" class="btn btn-primary">Agregar codigo de barras</a>
+                <a href="{{ route('prices.create') }}" class="btn btn-primary">Agregar nuevo precio</a>
             </div>
 
         </div>
@@ -18,19 +18,21 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Codigo</th>
+                    <th scope="col">Precio</th>
                     <th scope="col">Estado</th>
                     <th scope="col">Acciones</th>
 
                 </tr>
             </thead>
             <tbody>
-                @forelse ($barcodes as $barcode)
+                @forelse ($prices as $price)
                     <tr>
-                        <td scope="row">{{ $barcode->id }}</td>
-                        <td>{{ $barcode->codigo }}</td>
+                        <td scope="row">{{ $price->id }}</td>
+                        <td>$
+                            {{ number_format($price->precio, 2) }}
+                        </td>
                         <td>
-                            @if ($barcode->estado == 1)
+                            @if ($price->estado == 1)
                                 <span class="text-primary"><b>Activo</b></span>
                             @else
                                 <span class="text-danger">
@@ -39,9 +41,9 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('barcodes.show', $barcode->id) }}" class="btn btn-success">Ver</a>
-                            <a href="{{ route('barcodes.edit', $barcode->id) }}" class="btn btn-primary">Editar</a>
-                            <form action="{{ route('barcodes.destroy', $barcode->id) }}" method="POST" class="d-inline">
+                            <a href="{{ route('prices.show', $price->id) }}" class="btn btn-success">Ver</a>
+                            <a href="{{ route('prices.edit', $price->id) }}" class="btn btn-primary">Editar</a>
+                            <form action="{{ route('prices.destroy', $price->id) }}" method="POST" class="d-inline">
 
                                 <input type="hidden" name="_method" value="DELETE">
                                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -52,7 +54,7 @@
                 @empty
                     {{-- no hay productos --}}
                     <tr>
-                        <td colspan="6" class="text-center">No hay códigos de barras</td>
+                        <td colspan="6" class="text-center">No hay precios</td>
                     </tr>
                 @endforelse
 
@@ -60,7 +62,7 @@
         </table>
 
         {{-- pagination --}}
-        {{ $barcodes->links() }}
+        {{ $prices->links() }}
 
 
 
