@@ -49,4 +49,41 @@ class ProductController extends Controller
         return redirect()->route('products.index')
             ->with('success', 'Producto creado con éxito');
     }
+
+    public function show(Product $product)
+    {
+        return view('products.show', compact('product'));
+    }
+
+    public function edit(Product $product)
+    {
+        return view('products.edit', compact('product'));
+    }
+
+    public function update(Request $request, Product $product)
+    {
+        $request->validate([
+            'codigo' => 'required|unique:products|regex:/^[0-9]+$/|max:20',
+            'descripcion' => 'required|unique:products|max:60',
+            'category_id' => 'required|exists:categories,id',
+            'barcode' => 'required|array|min:1',
+            // 'barcode.*' => 'required|exists:barcodes,id',
+            'precios' => 'required|array|min:1',
+            // 'precios.*' => 'required|exists:prices,id',
+            'estado' => 'required',
+        ]);
+
+        $product->update($request->all());
+
+        return redirect()->route('products.index')
+            ->with('success', 'Producto actualizado con éxito');
+    }
+
+    public function destroy(Product $product)
+    {
+        $product->delete();
+
+        return redirect()->route('products.index')
+            ->with('success', 'Producto eliminado con éxito');
+    }
 }
