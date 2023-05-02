@@ -52,9 +52,8 @@
                         </td>
                     </tr>
                 @empty
-                    {{-- no hay productos --}}
                     <tr>
-                        <td colspan="6" class="text-center">No hay productos</td>
+                        <td colspan="6" class="text-center">No hay categorias</td>
                     </tr>
                 @endforelse
 
