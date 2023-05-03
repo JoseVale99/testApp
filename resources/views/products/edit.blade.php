@@ -61,50 +61,7 @@
                     @enderror
                 </div>
 
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="name">Codigos de barra*</label>
-                        <select class="form-control @error('barcode') is-invalid @enderror" id="barcodes" name="barcode[]"
-                            multiple>
-                            {{-- <option value="">Seleccione</option> --}}
 
-
-                            @foreach ($barcodes as $item)
-                                <option value="{{ $item->id }}" @if (in_array($item->id, $product->barcode)) selected @endif>
-                                    {{ $item->codigo }}</option>
-                            @endforeach
-
-
-                        </select>
-                    </div>
-                    @error('barcode')
-                        <div class="alert alert-danger mt-2">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <label for="name">Precios*</label>
-                        <select class="form-control @error('precios') is-invalid @enderror" id="precios" name="precios[]"
-                            multiple>
-
-                            @foreach ($prices as $item)
-                                <option value="{{ $item->id }}" @if (in_array($item->id, $product->precios)) selected @endif>
-                                    ${{ number_format($item->precio, 2) }}
-                                </option>
-                            @endforeach
-
-
-                        </select>
-                    </div>
-                    @error('precios')
-                        <div class="alert alert-danger mt-2">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
 
 
                 <div class="col-md-5">
@@ -126,6 +83,50 @@
                 </div>
 
             </div>
+
+
+            <div class="form-group mt-5">
+                <label for="codigos_barras">Códigos de barras:</label>
+                {{-- <div class="input-group">
+                    <input type="text" name="nuevo_codigo_barras" class="form-control"
+                        placeholder="Nuevo código de barras">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" id="btnAgregarCodigoBarras">Agregar</button>
+                    </span>
+                </div> --}}
+            </div>
+
+
+
+            @foreach ($product->barcodes as $codigo_barras)
+                <div>
+                    <label>Código de barras</label>
+                    <input type="text" name="codigos_barras[{{ $loop->index }}][codigo]"
+                        value="{{ $codigo_barras->codigo }}">
+
+                    <label for="codigos_barras[{{ $loop->index }}][estado]">Activo</label>
+                    <input type="checkbox" class="form-check-input" name="codigos_barras[{{ $loop->index }}][estado]"
+                        {{ $codigo_barras->estado ? 'checked' : '' }}>
+                </div>
+            @endforeach
+
+            <div class="form-group mt-5">
+                <label for="codigos_barras">Precios:</label>
+            </div>
+
+            @foreach ($product->prices as $item)
+                <div>
+                    <label>Precio: </label>
+                    <input type="text" name="precios[{{ $loop->index }}][precio]" value="{{ $item->precio }}">
+
+                    <label for="precios[{{ $loop->index }}][estado]">Activo</label>
+                    <input type="checkbox" class="form-check-input" name="precios[{{ $loop->index }}][estado]"
+                        {{ $item->estado ? 'checked' : '' }}>
+                </div>
+            @endforeach
+
+
+
             <button type="submit" class="btn btn-primary mt-4">Actualizar</button>
         </form>
 

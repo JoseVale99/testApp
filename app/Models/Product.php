@@ -22,9 +22,13 @@ class Product extends Model
         return $this->belongsTo(Category::class);
     }
 
-    //     public function codigosBarras()
-    //     {
-    //         return $this->belongsToMany(Barcode::class, 'precio')
-    //             ->withPivot('precio', 'estado');
-    //     }
+    public function barcodes()
+    {
+        return $this->hasMany(Barcode::class);
+    }
+
+    public function prices()
+    {
+        return $this->hasMany(Price::class);
+    }
 }

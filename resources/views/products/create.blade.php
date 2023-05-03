@@ -35,6 +35,9 @@
                     @enderror
                 </div>
 
+
+
+
                 {{-- categorias --}}
 
                 <div class="col-md-4">
@@ -45,7 +48,7 @@
                             <option value="">Seleccione</option>
                             @forelse ($categories as $category)
                                 <option value="{{ $category->id }}" @if (old('category_id') == $category->id) selected @endif>
-                                    {{ $category->codigo }}
+                                    {{ $category->descripcion }}
                                 </option>
                             @empty
                                 <option value="">
@@ -64,7 +67,7 @@
                 {{-- productos con varios codigos de barra --}}
 
 
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="name">Codgigos de barra*</label>
                         <select name="barcode[]" id="barcode"
@@ -85,10 +88,10 @@
                         </div>
                     @enderror
 
-                </div>
+                </div> --}}
 
                 {{-- precios --}}
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <div class="form-group">
                         <label for="name">Precios*</label>
                         <select name="precios[]" id="precios"
@@ -111,7 +114,7 @@
                         </div>
                     @enderror
 
-                </div>
+                </div> --}}
 
 
                 <div class="col-md-4">
@@ -133,9 +136,83 @@
                     @enderror
                 </div>
 
+
+
             </div>
+            <div class="d-line-horizontal mt-4">
+                <div class="btn-group-vertical">
+                    <label for="name">Codigos de barra*</label>
+
+                    <ul id="codigosBarras">
+                        <li>
+                            <input type="text" class="form-control @error('codigosBarras') is-invalid @enderror"
+                                name="codigosBarras[0][codigo]">
+                            <input type="checkbox" class="form-check-input" name="codigosBarras[0][activo]" value="1">
+                            Activo
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-dark mt-4" id="agregarCodigoBarra">Agregar Código de
+                        Barra</button>
+                </div>
+            </div>
+
+
+            <div class="d-line-horizontal mt-4">
+                <div class="btn-group-vertical">
+                    <label for="name">Precios*</label>
+
+                    <ul id="precios">
+                        <li>
+                            <input type="text" class="form-control" name="precios[0][precio]">
+                            <input type="checkbox" class="form-check-input" name="precios[0][activo]" value="1">
+                            Activo
+                        </li>
+                    </ul>
+                    <button type="button" class="btn btn-dark mt-4" id="agregarPrecio">Agregar precio</button>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
             <button type="submit" class="btn btn-primary mt-4">Agregar</button>
         </form>
 
     </div>
+
+    {{-- add java script --}}
+
+    <script>
+        var codigoBarraCount = 1;
+        var precioCount = 1;
+
+        document.getElementById('agregarCodigoBarra').addEventListener('click', function() {
+            var codigoBarraList = document.getElementById('codigosBarras');
+            var codigoBarraItem = document.createElement('li');
+
+            codigoBarraItem.innerHTML = '<input type="text"  class="form-control" name="codigosBarras[' +
+                codigoBarraCount +
+                '][codigo]">' +
+                '<input type="checkbox" class="form-check-input" name="codigosBarras[' + codigoBarraCount +
+                '][activo]" value="1">  Activo';
+            codigoBarraList.appendChild(codigoBarraItem);
+            codigoBarraCount++;
+        });
+
+        document.getElementById('agregarPrecio').addEventListener('click', function() {
+            var precioList = document.getElementById('precios');
+            var precioItem = document.createElement('li');
+            precioItem.innerHTML = '<input type="text" class="form-control"  name="precios[' + precioCount +
+                '][precio]">' +
+                '<input type="checkbox" class="form-check-input" name="precios[' + precioCount +
+                '][activo]" value="1"> Activo';
+            precioList.appendChild(precioItem);
+            precioCount++;
+        });
+    </script>
 @endsection

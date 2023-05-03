@@ -23,7 +23,7 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="name">Categorías</label>
-                    <select class="form-control" id="categoria" name="categoria_id" disabled>
+                    <select class="form-control" id="categoria" name="category_id" disabled>
                         @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @if ($product->category_id == $category->id) selected @endif>
                                 {{ $category->codigo }}</option>
@@ -38,7 +38,7 @@
                     <label for="name">Codigos de barra</label>
                     <select class="form-control" id="barcodes" name="barcode[]" multiple disabled>
                         @foreach ($barcodes as $item)
-                            <option value="{{ $item->id }}" @if (in_array($item->id, $product->barcode)) selected @endif>
+                            <option value="{{ $item->id }}" @if (in_array($item->codigo, $codes)) selected @endif>
                                 {{ $item->codigo }}</option>
                         @endforeach
                     </select>
@@ -49,11 +49,10 @@
             <div class="col-md-4">
                 <div class="form-group">
                     <label for="name">Precios</label>
-                    <select class="form-control" id="barcodes" name="barcode[]" multiple disabled>
+                    <select class="form-control" id="barcodes" name="precios[]" multiple disabled>
                         @foreach ($prices as $item)
-                            <option value="{{ $item->id }}" @if (in_array($item->id, $product->precios)) selected @endif>
-                                $ {{ number_format($item->precio, 2) }}
-                            </option>
+                            <option value="{{ $item->id }}" @if (in_array($item->precio, $precios)) selected @endif>
+                                {{ number_format($item->precio, 2) }}</option>
                         @endforeach
                     </select>
                 </div>

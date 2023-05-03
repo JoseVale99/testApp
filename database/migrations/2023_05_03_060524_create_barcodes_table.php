@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateBarcodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,13 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('barcodes', function (Blueprint $table) {
             $table->id();
             $table->string('codigo', 20);
-            $table->string('descripcion', 60);
-            // relacion with categories
-            $table->unsignedBigInteger('category_id');
-            // array of barcode
-            $table->json('barcode')->nullable();
-            $table->json('precios')->nullable();
             $table->boolean('estado')->default(true);
-            $table->foreign('category_id')->references('id')->on('categories');
+            $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
+
+
 
             $table->timestamps();
         });
@@ -36,6 +32,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('barcodes');
     }
 }
