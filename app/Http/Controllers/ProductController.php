@@ -52,19 +52,25 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        return view('products.show', compact('product'));
+        $categories = Category::where('estado', 1)->get();
+        $barcodes = Barcode::where('estado', 1)->get();
+        $prices = Price::where('estado', 1)->get();
+        return view('products.show', compact('product', 'categories', 'barcodes', 'prices'));
     }
 
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $categories = Category::where('estado', 1)->get();
+        $barcodes = Barcode::where('estado', 1)->get();
+        $prices = Price::where('estado', 1)->get();
+        return view('products.edit', compact('product', 'categories', 'barcodes', 'prices'));
     }
 
     public function update(Request $request, Product $product)
     {
         $request->validate([
-            'codigo' => 'required|unique:products|regex:/^[0-9]+$/|max:20',
-            'descripcion' => 'required|unique:products|max:60',
+            'codigo' => 'required|regex:/^[0-9]+$/|max:20',
+            'descripcion' => 'required|max:60',
             'category_id' => 'required|exists:categories,id',
             'barcode' => 'required|array|min:1',
             // 'barcode.*' => 'required|exists:barcodes,id',
