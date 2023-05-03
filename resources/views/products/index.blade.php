@@ -16,20 +16,24 @@
         </div>
 
         {{-- buscador  --}}
-        <div class="row mt-5">
-            <div class="col-md-12">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
-                        aria-describedby="basic-addon2">
-                    <div class="input-group-append">
-                        {{-- buton --}}
-                        <button class="btn btn-outline-secondary" type="button">
-                            Buscar
-                        </button>
+        <form action="{{ route('products.index') }}" method="get">
+
+            <div class="row mt-5">
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Buscar" aria-label="Buscar"
+                            aria-describedby="basic-addon2" name="search">
+
+                        <div class="input-group-append">
+                            {{-- buton --}}
+                            <button class="btn btn-outline-secondary" type="submit">
+                                Buscar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </form>
 
         <table class="table table-bordered mt-3">
             <thead>

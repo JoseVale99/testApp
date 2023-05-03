@@ -7,13 +7,41 @@ use App\Models\Category;
 use App\Models\Price;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Permission;
 
 class ProductController extends Controller
 {
 
-    public function index()
+    // boostrap pagination
+
+
+
+    public function index(Request $request)
     {
-        $products = Product::paginate(5);
+        // buscar por codigo, descripcion y precio
+
+        $buscar = $request->search;
+        $products = Product::where('codigo', 'like', '%' . $buscar . '%')
+            ->orWhere('estado', 'like', '%' . $buscar . '%')
+            // buscar en barcodes por codigo
+            ->orWhereHas('barcodes', function ($query) use ($buscar) {
+                $query->where('codigo', 'like', '%' . $buscar . '%');
+            })
+            // buscar en prices por precio
+            ->orWhereHas('prices', function ($query) use ($buscar) {
+                $query->where('precio', 'like', '%' . $buscar . '%');
+            })
+            // buscar por coincidencias en descripcion y codigo
+            ->orWhere('descripcion', 'like', '%' . $buscar . '%')
+            ->orWhere('codigo', 'like', '%' . $buscar . '%')
+            // buscar por categoria
+            ->orWhereHas('category', function ($query) use ($buscar) {
+                $query->where('descripcion', 'like', '%' . $buscar . '%');
+            })
+
+            ->paginate(10);
+
+
         return view('products.index', compact('products'));
     }
 
@@ -37,10 +65,6 @@ class ProductController extends Controller
             'descripcion' => 'required|string|max:255',
             'category_id' => 'required|exists:categories,id',
             'estado' => 'required|boolean',
-            // 'codigosBarras' => 'required|numeric|max:20',
-            // 'codigosBarras.*.estado' => 'nullable|boolean',
-            // 'precios.*.precio' => 'required|numeric',
-            // 'precios.*.estado' => 'nullable|boolean',
         ]);
 
         $product = Product::create($validatedData);
@@ -77,10 +101,6 @@ class ProductController extends Controller
     public function edit(Product $product)
     {
         $categories = Category::where('estado', 1)->get();
-        // $barcodes = Barcode::all();
-        // $codes = $product->barcodes()->pluck('codigo')->toArray();
-        // $prices = Price::all();
-        // $precios = $product->prices()->pluck('precio')->toArray();
         return view(
             'products.edit',
             compact('product', 'categories')
@@ -96,15 +116,7 @@ class ProductController extends Controller
             'estado' => 'required',
         ]);
 
-
-        // $product->update($request->all());
-
-        // $product->barcodes()->update(['estado' => $request->estado]);
-        // dd($request->all());
         foreach ($request->codigos_barras as $codBarrasData) {
-
-            //    update codigos barras with estado = 0
-            // dd($codBarrasData['estado']);
             $product->barcodes()->where('codigo', $codBarrasData['codigo'])->update(
 
                 [
