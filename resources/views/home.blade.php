@@ -20,14 +20,16 @@
                             <div class="p-2"><a href="{{ route('categories.index') }}" class="btn btn-dark">Crud de
                                     categorias</a></div>
 
+                            <div class="p-2"><a href="{{ route('products.index') }}" class="btn btn-warning">Crud de
+                                    productos</a></div>
+
                             <div class="p-2"><a href="{{ route('barcodes.index') }}" class="btn btn-primary">Crud de
                                     Códigos de barra</a></div>
 
                             <div class="p-2"><a href="{{ route('prices.index') }}" class="btn btn-success">Crud de
                                     precios</a></div>
 
-                            <div class="p-2"><a href="{{ route('products.index') }}" class="btn btn-warning">Crud de
-                                    productos</a></div>
+
 
                         </div>
                     </div>
