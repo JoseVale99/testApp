@@ -10,7 +10,9 @@
 
             {{-- boton agregar --}}
             <div class="col-md-4 mt-3">
-                <a href="{{ route('prices.create') }}" class="btn btn-primary">Agregar nuevo precio</a>
+                @can('prices.create')
+                    <a href="{{ route('prices.create') }}" class="btn btn-primary">Agregar nuevo precio</a>
+                @endcan
             </div>
 
         </div>
@@ -41,14 +43,20 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('prices.show', $price->id) }}" class="btn btn-success">Ver</a>
-                            <a href="{{ route('prices.edit', $price->id) }}" class="btn btn-primary">Editar</a>
-                            <form action="{{ route('prices.destroy', $price->id) }}" method="POST" class="d-inline">
+                            @can('prices.show', $price)
+                                <a href="{{ route('prices.show', $price->id) }}" class="btn btn-success">Ver</a>
+                            @endcan
+                            @can('prices.edit', $price)
+                                <a href="{{ route('prices.edit', $price->id) }}" class="btn btn-primary">Editar</a>
+                            @endcan
+                            @can('prices.destroy', $price)
+                                <form action="{{ route('prices.destroy', $price->id) }}" method="POST" class="d-inline">
 
-                                <input type="hidden" name="_method" value="DELETE">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button type="submit" class="btn btn-danger">Eliminar</button>
-                            </form>
+                                    <input type="hidden" name="_method" value="DELETE">
+                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
+                            @endcan
                         </td>
                     </tr>
                 @empty
